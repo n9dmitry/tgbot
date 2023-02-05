@@ -34,20 +34,19 @@ def process_occupation(message, full_name, age):
         bot.reply_to(message, 'Упс. Ошибка. Что-то не так...')
 
 def confirm_survey(msg):
-    if msg.text.lower() == 'да':
-        bot.send_message(chat_id=msg.chat.id, text='Как зовут тебя, о юный отрок? (ФИО) ')
+    if msg.text.lower() == '+':
+        bot.send_message(chat_id=msg.chat.id, text='Как зовут тебя, о юный отрок? (ФИО развернуто) ')
         bot.register_next_step_handler(msg, process_survey)
-    elif msg.text.lower() == 'нет':
-        bot.send_message(chat_id=msg.chat.id, text='Если у нас не будет анкеты в течении 24 часов мы придём к тебе и вырежем всю твою семью')
+
     else:
-        bot.send_message(chat_id=msg.chat.id, text='Не верно! Введи или "да" или "нет", другого не пойму =/ ')
+        bot.send_message(chat_id=msg.chat.id, text='Не верно! Напиши "+" чтобы ответить на вопросы ')
         bot.register_next_step_handler(msg, confirm_survey)
 
 
 @bot.message_handler(commands=['start'])
 def start_handler(message):
-    bot.send_message(chat_id=message.chat.id, text="Добрый вечер, я диспетчер!")
-    bot.send_message(chat_id=message.chat.id, text="Го пройдём опрос? Напиши: Да/Нет")
+    bot.send_message(chat_id=message.chat.id, text="Привет! Важно!!")
+    bot.send_message(chat_id=message.chat.id, text="У нас обязательный опросник (3 вопроса). Все участники должны его заполнить или бот автоматически кикнет из группы в течении 24 часов. Напиши '+' без кавычик чтобы пройти ")
     bot.register_next_step_handler(message, confirm_survey)
 
 if __name__ == "__main__":
